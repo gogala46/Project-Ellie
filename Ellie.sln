@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ellie", "Ellie\Ellie.csproj", "{EAD3E1B1-4417-4C31-8943-BE1819323A16}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EllieData", "EllieData\EllieData.csproj", "{68A82E85-2212-4F61-91D9-CBED59FFEE6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EllieService", "EllieService\EllieService.csproj", "{D1270499-30F6-4FA8-8A2D-BBA07416F8C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EAD3E1B1-4417-4C31-8943-BE1819323A16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAD3E1B1-4417-4C31-8943-BE1819323A16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAD3E1B1-4417-4C31-8943-BE1819323A16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAD3E1B1-4417-4C31-8943-BE1819323A16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68A82E85-2212-4F61-91D9-CBED59FFEE6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68A82E85-2212-4F61-91D9-CBED59FFEE6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68A82E85-2212-4F61-91D9-CBED59FFEE6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68A82E85-2212-4F61-91D9-CBED59FFEE6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1270499-30F6-4FA8-8A2D-BBA07416F8C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1270499-30F6-4FA8-8A2D-BBA07416F8C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1270499-30F6-4FA8-8A2D-BBA07416F8C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1270499-30F6-4FA8-8A2D-BBA07416F8C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6A0FD2DF-AAC4-45F6-BE7D-DFC4E8B6DB40}
+	EndGlobalSection
+EndGlobal

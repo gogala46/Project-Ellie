@@ -1,0 +1,142 @@
+﻿@model Ellie.Models.CategoriesModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <title>JS Bin</title>
+</head>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    header {
+        background: red;
+        height: 80px;
+    }
+
+    section {
+        background: pink;
+        height: 500px;
+    }
+
+    footer {
+        background: blue;
+        height: 80px;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 40%;
+    }
+
+    .cont {
+        position: relative;
+    }
+
+    .test {
+        background: green;
+        position: absolute;
+        top: 0;
+        left: 40%;
+        width: 60%;
+        height: 100%;
+        display: none;
+        z-index:10000;
+    }
+    
+    .test2 {
+        background: green;
+        position: absolute;
+        top: 0;
+        left: 40%;
+        width: 60%;
+        height: 100%;
+        display: none;
+
+    }
+</style>
+
+<body>
+    <header></header>
+    <section>
+        <div class="cont">
+            <ul>
+
+                @foreach (var i in Model.categories)
+                {
+                    <li onclick="getproducts(@i.Id)" onmouseover="getid(@i.Id)" onmouseout="normalImg()">@i.Name</li>
+                }
+            </ul>
+            <div class="test"></div>
+            <div class="test2"></div>
+        </div>
+    </section>
+    <footer></footer>
+
+
+    <script>
+        $(document).ready(function () {
+
+        });
+
+         function normalImg() {
+            console.log("close");
+                 $('.test').css('display','none');
+        }
+        function getid(id) {
+            console.log(id);
+               var url = "Category/PartialCat?Id=" + id;
+            //$("#test").load(url, function ()){
+
+            //};
+
+         
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                  // multiple data sent using ajax
+                success: function (html) {
+                    
+                    $(".test").html(html);
+                  $('.test').css('display','block')
+                }
+            });
+        }
+
+
+        function getproducts(id) {
+            var url = "Category/PartialProduct?CategoryId=" + id;
+
+                  $.ajax({
+                type: "GET",
+                url: url,
+                  // multiple data sent using ajax
+                success: function (html) {
+                    
+                    $(".test2").html(html);
+                  $('.test2').css('display','block')
+                }
+            });
+
+        }
+    </script>
+</body>
+</html>

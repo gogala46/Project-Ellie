@@ -1,0 +1,16 @@
+﻿@{
+
+    var getlist = ViewBag.list as Ellie.Models.ProductsModel;
+}
+<ul>
+    @{ foreach (var i in getlist.Products)
+        {
+            <li>@i.ProductName </li>
+        }
+
+    }
+
+</ul>
+
+
+
