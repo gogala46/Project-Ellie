@@ -29,6 +29,7 @@ namespace Ellie
             services.AddControllersWithViews();
             services.AddSingleton(Configuration);
             services.AddScoped<ICategory, CategoryService>();
+            services.AddScoped<IProduct, ProductService>();
             services.AddDbContext<EllieContext>(options => options.UseSqlServer(Configuration.GetConnectionString("EllieConnection")));
         }
 
@@ -56,7 +57,7 @@ namespace Ellie
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=category}/{action=Index}/{id?}");
             });
         }
     }

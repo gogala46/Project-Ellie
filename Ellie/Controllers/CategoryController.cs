@@ -49,30 +49,31 @@ namespace Ellie.Controllers
         }
 
 
-        public IActionResult PartialProduct(int CategoryId)
-        {
-            var subcats = _context.getCategories(CategoryId);
+        //    public IActionResult PartialProduct(int CategoryId)
+        //    {
+        //        var subcats = _context.getCategories(CategoryId);
 
 
-            var models = new List<Product>();
-            for (int i = 0; i < subcats.Count(); i++)
-            {
-                var element = subcats.ToList()[i];
-                var ola = _context.getProducts(element.Id);
-                models.Add(ola.ToList()[0]);
-            }
+        //        var models = new List<Product>();
+        //        for (int i = 0; i < subcats.Count(); i++)
+        //        {
+        //            var element = subcats.ToList()[i];
+        //            var ola = _context.getProducts(element.Id);
+        //            models.Add(ola.ToList()[0]);
+        //        }
 
-            //var models = _context.getProducts(CategoryId);
+        //        //var models = _context.getProducts(CategoryId);
 
-            var ProductModels = models.Select(x => new ProductModel()
-            {
-                Id = x.Id,
-                ProductName = x.ProductName,
-                CategoryId=x.CategoryId
-            });
-            var newmodel = new ProductsModel { Products = ProductModels };
-            ViewBag.list = newmodel;
-            return PartialView("PartialProduct");
-        }
+        //        var ProductModels = models.Select(x => new ProductModel()
+        //        {
+        //            Id = x.Id,
+        //            ProductName = x.ProductName,
+        //            CategoryId=x.CategoryId
+        //        });
+        //        var newmodel = new ProductsModel { Products = ProductModels };
+        //        ViewBag.list = newmodel;
+        //        return PartialView("PartialProduct");
+        //    }
+        //}
     }
 }

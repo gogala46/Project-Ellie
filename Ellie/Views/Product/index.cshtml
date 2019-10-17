@@ -1,0 +1,15 @@
+﻿@model Ellie.Models.Product.ProductsModel
+
+
+@await Html.PartialAsync("_Category", Model.Categories)
+
+
+<ul>
+
+
+    @foreach (var i in Model.Products)
+    {
+        <li>@i.ProductName</li>
+    }
+</ul>
+

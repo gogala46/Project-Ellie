@@ -11,6 +11,6 @@ namespace EllieData
 
         IEnumerable<Category> getCategories(int Id);
 
-        IEnumerable<Product> getProducts(int? CategoryId);
+    
     }
 }
