@@ -29,7 +29,8 @@ namespace Ellie.Controllers
                 ParentCategoryId = x.ParentCategoryId
             });
             var newmodel = new CategoriesModel { categories = CategoryModels };
-            return View(newmodel);
+            ViewBag.list = newmodel;
+            return PartialView("Index");
         }
 
         public IActionResult PartialCat(int Id)
@@ -47,6 +48,9 @@ namespace Ellie.Controllers
             ViewBag.list = newmodel;
             return PartialView("PartialCat");
         }
+
+
+
 
 
         //    public IActionResult PartialProduct(int CategoryId)

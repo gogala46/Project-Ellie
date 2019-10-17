@@ -33,25 +33,12 @@ namespace Ellie.Controllers
                 CategoryId = z.CategoryId
             });
             var products = new ProductsModel { Products = productmodels };
-            products.Categories = getcategories();
+            
 
             return View(products);
         }
 
 
-        public CategoriesModel getcategories()
-        {
-            var models = _context2.getCategories();
 
-            var CategoryModels = models.Select(x => new CategoryModel()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                ImageUrl = x.ImageUrl,
-                ParentCategoryId = x.ParentCategoryId
-            });
-            var newmodel = new CategoriesModel { categories = CategoryModels };
-            return newmodel;
-        }
     }
 }

@@ -1,27 +1,14 @@
 ﻿@model Ellie.Models.CategoriesModel
 @{
     ViewData["Title"] = "Index";
+
+    var getlist = ViewBag.list as Ellie.Models.CategoriesModel;
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-@*<style>
+<style>
     * {
         box-sizing: border-box;
-    }
-
-    header {
-        background: red;
-        height: 80px;
     }
 
     section {
@@ -34,28 +21,31 @@
         height: 80px;
     }
 
-    ul {
-        list-style: none;
-        padding: 0;
+    nav ul {
         margin: 0;
-        width: 40%;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
     }
 
     .cont {
         position: relative;
+        width: 100%;
+        background: red;
     }
 
     .test {
         background: green;
         position: absolute;
-        top: 0;
-        left: 40%;
-        width: 60%;
-        height: 100%;
+        left: 0;
+        top: 100%;
+        width: 100%;
+        height: 400px;
         display: none;
-        z-index:10000;
+        z-index: 10000;
     }
-    
+
     .test2 {
         background: green;
         position: absolute;
@@ -64,75 +54,81 @@
         width: 60%;
         height: 100%;
         display: none;
+    }
+
+    .content-div {
+        width: 1200px;
+        margin: auto;
+        position: relative;
+    }
+
+    nav ul li {
+        list-style: none;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        align-items: center;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+</style>
+
+<nav class="cont">
+    <div class="content-div">
+        <ul>
+
+            @foreach (var i in getlist.categories)
+            {
+                <li onclick="getproducts(@i.Id)" onmouseover="getid(@i.Id)" onmouseout="normalImg()">
+                    <a>@i.Name</a>
+
+                    <div class="test"></div>
+                </li>
+            }
+            <li>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">ყველა</a>
+            </li>
+        </ul>
+        <div class="test2"></div>
+
+    </div>
+</nav>
+
+
+
+<script>
+    $(document).ready(function () {
+
+    });
+
+    function normalImg() {
+        console.log("close");
+        $('.test').css('display', 'none');
+    }
+    function getid(id) {
+        console.log(id);
+        var url = "Category/PartialCat?Id=" + id;
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            // multiple data sent using ajax
+            success: function (html) {
+
+                $(".test").html(html);
+                $('.test').css('display', 'block')
+            }
+        });
+    }
+
+
+    function getproducts(id) {
 
     }
-</style>*@
 
 
 
-    
-    @await Html.PartialAsync("_Category",  Model)
-    @*<header></header>
-        <section>
-            <div class="cont">
-                <ul>
-
-                    @foreach (var i in Model.categories)
-                    {
-                        <li onclick="getproducts(@i.Id)" onmouseover="getid(@i.Id)" onmouseout="normalImg()">@i.Name</li>
-                    }
-                </ul>
-                <div class="test"></div>
-                <div class="test2"></div>
-            </div>
-        </section>
-        <footer></footer>*@
-
-
-    @*<script>
-            $(document).ready(function () {
-
-            });
-
-             function normalImg() {
-                console.log("close");
-                     $('.test').css('display','none');
-            }
-            function getid(id) {
-                console.log(id);
-                   var url = "Category/PartialCat?Id=" + id;
-                //$("#test").load(url, function ()){
-
-                //};
-
-
-
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                      // multiple data sent using ajax
-                    success: function (html) {
-
-                        $(".test").html(html);
-                      $('.test').css('display','block')
-                    }
-                });
-            }
-
-
-            function getproducts(id) {
-                var url = "Category/PartialProduct?CategoryId=" + id;
-
-                      $.ajax({
-                    type: "GET",
-                    url: url,
-                      // multiple data sent using ajax
-                    success: function (html) {
-
-                        $(".test2").html(html);
-                      $('.test2').css('display','block')
-                    }
-                });
-
-            }
-        </script>*@
+</script>
