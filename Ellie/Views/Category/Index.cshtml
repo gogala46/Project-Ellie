@@ -82,8 +82,8 @@
 
             @foreach (var i in getlist.categories)
             {
-                <li onclick="getproducts(@i.Id)" onmouseover="getid(@i.Id)" onmouseout="normalImg()">
-                    <a>@i.Name</a>
+                <li    onmouseover="getid(@i.Id)" onmouseout="normalImg()">
+                    <a  asp-controller="Product" asp-action="Index" asp-route-id=>@i.Name</a>
 
                     <div class="test"></div>
                 </li>
