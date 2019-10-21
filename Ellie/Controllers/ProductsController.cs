@@ -7,154 +7,114 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EllieData;
 using EllieData.Models;
+using Ellie.Models.Product;
 
 namespace Ellie.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly EllieContext _context;
-
-        public ProductsController(EllieContext context)
+        private IProduct _context;
+        public ProductsController(IProduct context)
         {
             _context = context;
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? category)
         {
-            var ellieContext = _context.Products.Include(p => p.category);
-            return View(await ellieContext.ToListAsync());
-        }
-
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            var products = default(IEnumerable<Product>);
+            var productmodel = default(IEnumerable<ProductModel>);
+            var productsmodel = new ProductsModel();
+            productsmodel.Products = productmodel;
+            if (category != null)
             {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .Include(p => p.category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
-        // GET: Products/Create
-        public IActionResult Create()
-        {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
-            return View();
-        }
-
-        // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductName,CategoryId")] Product product)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
-            return View(product);
-        }
-
-        // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
-            return View(product);
-        }
-
-        // POST: Products/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProductName,CategoryId")] Product product)
-        {
-            if (id != product.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (_context.GetParent(category))
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.Id))
+                    products = _context.getProducts(category);
+                    if (products.Count() > 0)
                     {
-                        return NotFound();
+                        productmodel = products.Select(x => new ProductModel()
+                        {
+                            Id = x.Id,
+                            ProductName = x.ProductName,
+                            CategoryId = x.CategoryId
+                        });
+                        productsmodel.Products = productmodel;
+                    }
+                  
+                    return View(productsmodel);
+
+                }
+                else
+                {
+                    var subcats = _context.getCategories(category ?? 0);
+                    if (subcats.Count() > 0)
+                    {
+                        var models = new List<Product>();
+                        for (int i = 0; i < subcats.Count(); i++)
+                        {
+                            var element = subcats.ToList()[i];
+                            var ola = _context.getProducts(element.Id);
+                            if (ola.Count() > 0)
+                            {
+                                models.Add(ola.ToList()[0]);
+                            }
+                           
+                        }
+                        if (models.Count() > 0)
+                        {
+                            productmodel = models.Select(x => new ProductModel()
+                            {
+                                Id = x.Id,
+                                ProductName = x.ProductName,
+                                CategoryId = x.CategoryId
+                            });
+
+                            productsmodel.Products = productmodel;
+                        }
+                       
+                        return View(productsmodel);
                     }
                     else
                     {
-                        throw;
+                        return View(productsmodel);
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", product.CategoryId);
-            return View(product);
-        }
-
-        // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
+            else
             {
-                return NotFound();
+                products = _context.getAllProducts();
+                if (products.Count() > 0)
+                {
+                    productmodel = products.Select(x => new ProductModel()
+                    {
+                        Id = x.Id,
+                        ProductName = x.ProductName,
+                        CategoryId = x.CategoryId
+                    });
+                    productsmodel = new ProductsModel { Products = productmodel };
+                }
+           
+                return View(productsmodel);
             }
 
-            var product = await _context.Products
-                .Include(p => p.category)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
         }
 
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+
+
+
+
+        public async Task<IActionResult> Product(int id)
         {
-            var product = await _context.Products.FindAsync(id);
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            var product = _context.GetProduct(id);
+            var productmodel = new ProductModel { Id = product.Id, ProductName = product.ProductName };
+            return View(productmodel);
         }
 
-        private bool ProductExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
-        }
     }
 }
+
+   
+ 
+

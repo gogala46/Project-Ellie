@@ -12,5 +12,6 @@ namespace Ellie.Models
         public string ImageUrl { get; set; }
 
         public int? ParentCategoryId { get; set; }
+        public IEnumerable<CategoryModel> ChildCategories { get; set; }
     }
 }

@@ -35,7 +35,7 @@
         background: red;
     }
 
-    .test {
+    .other-test {
         background: green;
         position: absolute;
         left: 0;
@@ -76,20 +76,33 @@
     }
 </style>
 
+
+
 <nav class="cont">
     <div class="content-div">
         <ul>
 
             @foreach (var i in getlist.categories)
             {
-                <li    onmouseover="getid(@i.Id)" onmouseout="normalImg()">
-                    <a  asp-controller="Product" asp-action="Index" asp-route-id=>@i.Name</a>
+            @*<li onmouseover="getid(@i.Id)" onmouseout="normalImg()">*@
+                <li onmouseover="getid(@i.Id)" onmouseout="normalImg()">
+                @*<a @Html.ActionLink("olaa", "Products", "Index", new { category = i.Id }, null)></a>*@
+                <a asp-controller="Products" asp-action="Index" asp-route-category=@i.Id>@i.Name</a>
 
-                    <div class="test"></div>
+                    <div class="other-test test-@i.Id">
+                        <ul>
+                            @foreach (var z in i.ChildCategories)
+                            {
+                            <li> 
+                            <a asp-controller="Products" asp-action="Index" asp-route-category=@z.Id>@z.Name</a>
+                            </li>
+                            }
+                        </ul>
+                    </div>
                 </li>
             }
             <li>
-                <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">ყველა</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Products" asp-action="Index">ყველა</a>
             </li>
         </ul>
         <div class="test2"></div>
@@ -105,23 +118,25 @@
     });
 
     function normalImg() {
-        console.log("close");
-        $('.test').css('display', 'none');
+        
+        $('.other-test').css('display', 'none');
     }
     function getid(id) {
-        console.log(id);
-        var url = "Category/PartialCat?Id=" + id;
+         //$('.test').css('display', 'block')
+       
+        //var url = "Category/PartialCat?Id=" + id;
 
-        $.ajax({
-            type: "GET",
-            url: url,
-            // multiple data sent using ajax
-            success: function (html) {
+        //$.ajax({
+        //    type: "GET",
+        //    url: url,
+        //    // multiple data sent using ajax
+        //    success: function (html) {
 
-                $(".test").html(html);
-                $('.test').css('display', 'block')
-            }
-        });
+        //        $(".test").html(html);
+                $('.other-test').css('display', 'none')
+                $('.test-' + id).css('display', 'block')
+        //    }
+        //});
     }
 
 

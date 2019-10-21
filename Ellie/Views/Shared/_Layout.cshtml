@@ -55,9 +55,9 @@
 <script>
 
     $(document).ready(function () {
-        var url = "Category/index";
+        var url = "/Category/index";
         //$("#test").load(url, function ()){
-
+        console.log(url);
         //};
 
 
@@ -67,9 +67,9 @@
             url: url,
             // multiple data sent using ajax
             success: function (html) {
-                console.log(html);
+     
                 $(".cont").html(html);
-                $('.test').css('display', 'block')
+                //$('.test').css('display', 'block')
             }
         });
     });

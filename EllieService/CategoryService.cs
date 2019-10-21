@@ -18,8 +18,15 @@ namespace EllieService
         public IEnumerable<Category> getCategories()
         {
             var cat = _context.Categories.Where(x => x.ParentCategoryId == null).ToList();
+            for (int i = 0; i < cat.Count(); i++)
+            {
+                var element = cat[i];
+                element.ChildCategories = _context.Categories.Where(x=>x.ParentCategoryId==element.Id).ToList();
+            }
             return cat;
         }
+
+   
 
         public IEnumerable<Category> getCategories(int Id)
         {

@@ -7,7 +7,14 @@ namespace EllieData
 {
     public interface IProduct
     {
-        IEnumerable<Product> getProducts(int CategoryId);
+        IEnumerable<Product> getProducts(int? CategoryId);
         IEnumerable<Product> getAllProducts();
+
+        IEnumerable<Category> getCategories(int Id);
+
+        bool GetParent(int? Id);
+
+        Product GetProduct(int Id);
+        
     }
 }

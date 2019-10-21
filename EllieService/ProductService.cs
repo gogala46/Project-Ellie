@@ -22,11 +22,32 @@ namespace EllieService
             return products;
         }
 
-        public IEnumerable<Product> getProducts(int CategoryId)
+        public IEnumerable<Product> getProducts(int? CategoryId)
         {
             var products = _context.Products.Where(x => x.CategoryId == CategoryId).ToList();
             return products;
             
         }
+
+        public IEnumerable<Category> getCategories(int Id)
+        {
+            return _context.Categories.Where(x => x.ParentCategoryId == Id).ToList();
+        }
+
+       
+        public bool GetParent(int? Id)
+        {
+            var parent = _context.Categories.Where(x => x.Id == Id).Select(z => z.ParentCategoryId).FirstOrDefault();
+            if (parent != null)
+                return true;
+            return false;
+        }
+
+        public Product GetProduct(int Id)
+        {
+            return _context.Products.Where(x => x.Id == Id).FirstOrDefault();
+        }
+
+        
     }
 }

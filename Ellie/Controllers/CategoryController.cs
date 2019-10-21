@@ -26,7 +26,15 @@ namespace Ellie.Controllers
                 Id = x.Id,
                 Name = x.Name,
                 ImageUrl = x.ImageUrl,
-                ParentCategoryId = x.ParentCategoryId
+                ParentCategoryId = x.ParentCategoryId,
+                ChildCategories = x.ChildCategories.Select(p => new CategoryModel()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    ImageUrl = p.ImageUrl,
+                    ParentCategoryId = p.ParentCategoryId,
+                })
+
             });
             var newmodel = new CategoriesModel { categories = CategoryModels };
             ViewBag.list = newmodel;
